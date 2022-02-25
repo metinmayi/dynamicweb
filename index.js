@@ -1,8 +1,9 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
-const reviewsRoute = require("./routes/reviews.js");
+const restaurantsRoute = require("./routes/restaurants.js");
 const usersRoute = require("./routes/users.js");
 const app = express();
+const db = require("./db/db.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -16,8 +17,12 @@ app.engine(
 app.set("view engine", "hbs");
 
 //Routes
-app.use("/reviews", reviewsRoute);
+app.use("/restaurants", restaurantsRoute);
 app.use("/users", usersRoute);
+
+app.get("/", async (req, res) => {
+	res.send("Landing page");
+});
 
 app.listen(3000, () => {
 	console.log("Server is up");
