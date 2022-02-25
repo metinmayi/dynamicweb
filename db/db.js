@@ -13,11 +13,15 @@ client.connect(async (err) => {
 
 //Function to get all restaurants
 const getRestaurants = async () => {
-	return await client
-		.db("grupparbete")
-		.collection("restaurants")
-		.find({})
-		.toArray();
+	try {
+		return await client
+			.db("grupparbete")
+			.collection("restaurants")
+			.find({})
+			.toArray();
+	} catch (error) {
+		return error.message;
+	}
 };
 //Function to add a restaurant to the database
 const addRestaurant = async (reviewObject) => {
@@ -29,7 +33,7 @@ const addRestaurant = async (reviewObject) => {
 
 		return result;
 	} catch (error) {
-		return error;
+		return error.message;
 	}
 };
 
@@ -78,7 +82,7 @@ const setRating = async (id, rating) => {
 				},
 			]);
 	} catch (error) {
-		console.log(error);
+		return error.message;
 	}
 };
 
