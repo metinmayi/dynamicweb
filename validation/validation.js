@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const loginValidation = (username, password) => {
+const login = (username, password) => {
 	const login = {
 		username: username,
 		password: password,
@@ -13,15 +13,22 @@ const loginValidation = (username, password) => {
 	return schema.validate(login);
 };
 
-const registerValidation = new Joi.object({
-	username: Joi.string().min(1).max(12).required(),
-	password: Joi.string().required(),
-});
+// const registerValidation = new Joi.object({
+// 	username: Joi.string().min(1).max(12).required(),
+// 	password: Joi.string().required(),
+// });
 
-const reviewValdidation = new Joi.object({
-	image: Joi.string().required(),
-	description: Joi.string().required(),
-	rating: Joi.number().min(1).max(0),
-});
+const restaurant = (restaurantObject) => {
+	const schema = new Joi.object({
+		image: Joi.string().required(),
+		description: Joi.string().required(),
+		reviews: Joi.number().required(),
+		totalRating: Joi.number().required(),
+		averageRating: Joi.number().required(),
+	});
 
-module.exports = loginValidation;
+	return schema.validate(restaurantObject);
+};
+
+exports.login = login;
+exports.restaurant = restaurant;
