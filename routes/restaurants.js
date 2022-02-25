@@ -40,8 +40,7 @@ router.post("/rate/", async (req, res) => {
 //Deletes a restaurant
 router.post("/delete/:id", async (req, res) => {
 	const result = await db.deleteRestaurant(req.params.id);
-	if (result === "Invalid id") return res.status(400).send("Invalid Id");
-	res.send("Successfully deleted the restaurant");
+	res.send(result);
 });
 
 module.exports = router;

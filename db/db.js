@@ -37,15 +37,18 @@ const editRestaurant = () => {
 	console.log("Drink piss");
 };
 
-const deleteRestaurant = (id) => {
+const deleteRestaurant = async (id) => {
 	try {
 		const mongoID = new ObjectId(id);
-		client
+		const deletedRestaurant = await client
 			.db("grupparbete")
 			.collection("restaurants")
 			.deleteOne({ _id: mongoID });
+		return deletedRestaurant.deletedCount > 0
+			? "Deleted the restaurant"
+			: "Couldn't find that restaurant";
 	} catch (error) {
-		return "Invalid id";
+		return `${error.name}: ${error.message}`;
 	}
 };
 
@@ -74,8 +77,9 @@ const setRating = async (id, rating) => {
 					},
 				},
 			]);
-		console.log("Clcik");
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 exports.getRestaurants = getRestaurants;
