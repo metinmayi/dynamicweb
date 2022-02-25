@@ -3,8 +3,9 @@ const router = express.Router();
 const validation = require("../validation/validation.js");
 const db = require("../db/db.js");
 //localhost:3000/restaurants/
-router.get("/", (req, res) => {
-	res.send("You performed a GET request to the restaurants.");
+router.get("/", async (req, res) => {
+	const restaurants = await db.getRestaurants();
+	res.send(restaurants);
 });
 
 //Creates a new restaurant
@@ -12,8 +13,10 @@ router.post("/add", async (req, res) => {
 	//Creates and object based on the request body.
 	const restaurantObject = {
 		image: req.body.image,
+		name: req.body.name,
 		description: req.body.description,
-		reviews: 0,
+		reviews: 1,
+		comments: [],
 		totalRating: 0,
 		averageRating: 0,
 	};
@@ -26,6 +29,19 @@ router.post("/add", async (req, res) => {
 	res.send("Your restaurant has been added!");
 });
 
-router.post("/rate", async (req, res) => {});
+//Rates a restaurant
+router.post("/rate/", async (req, res) => {
+	await db.setRating(req.body.id, req.body.rating);
+	const result = await validation.rating(req.body.mongoID, req.body.rating);
+	if (result.error) return res.status(400).send("Invalid Payload");
+	res.send("Good job");
+});
+
+//Deletes a restaurant
+router.post("/delete/:id", async (req, res) => {
+	const result = await db.deleteRestaurant(req.params.id);
+	if (result === "Invalid id") return res.status(400).send("Invalid Id");
+	res.send("Successfully deleted the restaurant");
+});
 
 module.exports = router;
