@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
+const bcrypt = require("bcrypt");
 dotenv.config();
 const { MongoClient, ObjectId } = require("mongodb");
-const { review } = require("../validation/validation");
 const client = new MongoClient(process.env.MONGODB_TOKEN);
 client.connect(async (err) => {
 	if (err) {
@@ -86,8 +86,30 @@ const setRating = async (id, rating) => {
 	}
 };
 
+const register = async (username, password, email) => {
+	try {
+		//Look if there's an user with that username already
+		const nameExists = await client
+			.db("grupparbete")
+			.collection("users")
+			.findOne({ username: username.toLowerCase() });
+		if (nameExists) return "That username already exists";
+		//Encrypts the password and tries to create the new user.
+
+		const hashedPassword = await bcrypt.hash(password, 10);
+		await client.db("grupparbete").collection("users").insertOne({
+			username: username.toLowerCase(),
+			password: hashedPassword,
+			email: email,
+		});
+		return "Your user has been created";
+	} catch (error) {
+		return error.message;
+	}
+};
 exports.getRestaurants = getRestaurants;
 exports.addRestaurant = addRestaurant;
 exports.editRestaurant = editRestaurant;
 exports.deleteRestaurant = deleteRestaurant;
 exports.setRating = setRating;
+exports.register = register;
