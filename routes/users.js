@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
 	if (result.error) return res.status(400).send(result.error.message);
 	if (req.body.password != req.body.repeatPassword)
 		return res.status(400).send("Your passwords did not match");
-	//If validation was good, tries to create a new user
+	//If validation was good and passwords matches, try to create a new user.
 	const registerAttempt = await db.register(
 		req.body.username,
 		req.body.password,
