@@ -13,10 +13,22 @@ const login = (username, password) => {
 	return schema.validate(login);
 };
 
-// const registerValidation = new Joi.object({
-// 	username: Joi.string().min(1).max(12).required(),
-// 	password: Joi.string().required(),
-// });
+const register = (username, password, repeatPassword, email) => {
+	const register = {
+		username: username,
+		password: password,
+		repeatPassword: repeatPassword,
+		email: email,
+	};
+	const schema = new Joi.object({
+		username: Joi.string().min(1).max(12).required(),
+		password: Joi.string().required(),
+		repeatPassword: Joi.string().required(),
+		email: Joi.string().email().required(),
+	});
+
+	return schema.validate(register);
+};
 
 const rating = (ratingObject) => {
 	const schema = new Joi.object({
@@ -43,3 +55,4 @@ const restaurant = (restaurantObject) => {
 exports.login = login;
 exports.restaurant = restaurant;
 exports.rating = rating;
+exports.register = register;
