@@ -1,0 +1,21 @@
+<h2>Not already a registered member with us? Don't worry you can sign up for
+  free here!</h2>
+
+<form action="/users/register" method="post">
+  <input type="text" name="username" placeholder="Username" />
+  <input type="password" name="password" placeholder="Password" />
+  <input
+    type="password"
+    name="confrimPassword"
+    placeholder="Confirm Password"
+  />
+  <input type="submit" value="Register" />
+</form>
+
+<h2>Already a member? Enter your login details here!</h2>
+
+<form action="/users/login" method="post">
+  <input type="text" name="username" placeholder="Username" />
+  <input type="password" name="password" placeholder="Password" />
+  <input type="submit" value="Login" />
+</form>
