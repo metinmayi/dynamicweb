@@ -8,6 +8,10 @@ router.get("/", async (req, res) => {
 	res.send(restaurants);
 });
 
+router.get("/add", (req, res) => {
+	res.render("restaurants/review-create");
+});
+
 //Creates a new restaurant
 router.post("/add", async (req, res) => {
 	//Creates and object based on the request body.
