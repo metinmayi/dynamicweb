@@ -12,7 +12,7 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
 	// Ändrade till loginValidation.login annars hittar den inte funktionen?
 	const result = await validation.login(req.body.username, req.body.password);
-	if (result.error) return res.status(400).send("Invalid payload");
+	if (result.error) return res.status(400).send(result.error.message);
 
 	//INSERT COOKIE HERE
 	res.send(req.body);
