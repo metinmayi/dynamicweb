@@ -15,7 +15,7 @@ router.post("/add", async (req, res) => {
 		image: req.body.image,
 		name: req.body.name,
 		description: req.body.description,
-		reviews: 1,
+		reviews: 0,
 		comments: [],
 		totalRating: 0,
 		averageRating: 0,
