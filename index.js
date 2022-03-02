@@ -4,6 +4,7 @@ const restaurantsRoute = require("./routes/restaurants.js");
 const usersRoute = require("./routes/users.js");
 const app = express();
 const db = require("./db/db.js");
+const fileUpload = require("express-fileupload");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,6 +16,9 @@ app.engine(
   })
 );
 app.set("view engine", "hbs");
+
+app.use(express.static("public"));
+app.use(fileUpload());
 
 //Routes
 app.use("/restaurants", restaurantsRoute);

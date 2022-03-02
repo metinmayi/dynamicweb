@@ -1,3 +1,4 @@
+<h2>Single page for restaurants</h2>
 <h2>{{name}}</h2>
 
 <div class="review-container">
@@ -8,3 +9,18 @@
   <p><b>Reviews: </b>{{reviews}}</p>
   <p><b>Comments: </b>{{comments}}</p>
 </div>
+
+{{#if login}}
+  <label for="delete">Delete Restaurant</label>
+  <form action="/restaurants/mypage/delete/{{id}}" method="post">
+    <input type="submit" value="Delete" />
+  </form>
+
+  <label for="edit">Edit Restaurant</label>
+  <form action="/restaurants/mypage/edit" method="post">
+    <input type="file" name="image" id="image" /><br />
+    <input type="text" name="name" placeholder="Name of Restaurant" /><br />
+    <input type="text" name="description" placeholder="Description" /><br />
+    <input type="submit" value="Confirm" />
+  </form>
+{{/if}}

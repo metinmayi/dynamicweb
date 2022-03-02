@@ -5,7 +5,7 @@
   {{#each restaurants}}
     <a href="/restaurants/{{id}}">
       <div class="resturant-single">
-        <img src="{{image}}" alt="Picture of an awesome restaurant" />
+        <img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
         <p>{{name}}</p>
       </div>
     </a>
@@ -14,7 +14,11 @@
 
 <h2>Add new review</h2>
 
-<form action="/restaurants/mypage/add" method="post">
+<form
+  action="/restaurants/mypage/add"
+  method="post"
+  enctype="multipart/form-data"
+>
   <label for="image">Upload image of restaurant</label>
   <input type="file" name="image" id="image" /><br />
   <input type="text" name="name" placeholder="Name of Restaurant" /><br />
