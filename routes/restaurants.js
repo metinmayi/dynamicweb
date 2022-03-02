@@ -2,18 +2,20 @@ const express = require("express");
 const router = express.Router();
 const validation = require("../validation/validation.js");
 const db = require("../db/db.js");
+// const fileUpload = require("express-fileupload");
+
 //localhost:3000/restaurants/
 router.get("/", async (req, res) => {
   const restaurants = await db.getRestaurants();
   res.send(restaurants);
 });
 
-router.get("/add", (req, res) => {
-  res.render("restaurants/review-create");
+router.get("/mypage", (req, res) => {
+  res.render("restaurants/myPage");
 });
 
 //Creates a new restaurant
-router.post("/add", async (req, res) => {
+router.post("/mypage/add", async (req, res) => {
   //Creates and object based on the request body.
   const restaurantObject = {
     image: req.body.image,
@@ -30,12 +32,13 @@ router.post("/add", async (req, res) => {
   if (result.error) return res.status(400).send(result.error.message);
   //If it does not return error, send the object to the database.
   const addedReview = await db.addRestaurant(restaurantObject);
-  res.send("Your restaurant has been added!");
+  res.render("restaurants/myPage");
 });
 
 // Single page
 router.get("/:id", async (req, res) => {
-  const result = await db.getRestaurants().findById(req.params.id).lean();
+  const result = await db.getRestaurants();
+  result.findById(req.params.id).lean();
 
   res.render("resturants/review-single", result);
 });

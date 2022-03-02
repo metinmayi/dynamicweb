@@ -1,0 +1,33 @@
+<h2>My Page</h2>
+
+<h3>My Restaurants</h3>
+<div id="my-restaurants">
+  {{#each restaurants}}
+    <a href="/restaurants/{{id}}">
+      <div class="resturant-single">
+        <img src="{{image}}" alt="Picture of an awesome restaurant" />
+        <p>{{name}}</p>
+      </div>
+    </a>
+  {{/each}}
+</div>
+
+<h2>Add new review</h2>
+
+<form action="/restaurants/mypage/add" method="post">
+  <label for="image">Upload image of restaurant</label>
+  <input type="file" name="image" id="image" /><br />
+  <input type="text" name="name" placeholder="Name of Restaurant" /><br />
+  <input type="text" name="description" placeholder="Description" /><br />
+
+  <select name="rating">
+    <option value="Rating" disabled selected>Rate restaurant</option>
+    <option value="1">&#9733;</option>
+    <option value="2">&#9733; &#9733;</option>
+    <option value="3">&#9733; &#9733; &#9733;</option>
+    <option value="4">&#9733; &#9733; &#9733; &#9733;</option>
+    <option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
+  </select>
+
+  <input type="submit" value="Add" />
+</form>
