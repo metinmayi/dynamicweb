@@ -37,10 +37,13 @@ router.post("/mypage/add", async (req, res) => {
 
 // Single page
 router.get("/:id", async (req, res) => {
-  const result = await db.getRestaurants();
-  result.findById(req.params.id).lean();
+  const restaurant = await db.getSpecificRestaurant(req.params.id);
 
-  res.render("resturants/review-single", result);
+  console.log(req.params.id);
+
+  console.log(restaurant);
+
+  res.render("restaurants/review-single", restaurant);
 });
 
 //Rates a restaurant
