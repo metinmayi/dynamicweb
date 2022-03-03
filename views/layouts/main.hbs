@@ -14,8 +14,14 @@
       <a href="/">Home</a>
       <a href="/users/login">Login/register</a>
       <a href="/restaurants/mypage">My Page</a>
-      <a href="/logout">Logout</a>
     </nav>
+    {{#if loggedIn}}
+      <p>Logged in as {{username}}</p>
+
+      <form action="/users/logout" method="post">
+        <input type="submit" value="Logout" />
+      </form>
+    {{/if}}
 
     {{{body}}}
 

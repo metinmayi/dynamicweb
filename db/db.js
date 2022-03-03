@@ -11,6 +11,42 @@ client.connect(async (err) => {
   console.log("Database is connected");
 });
 
+const addUser = async (userObject) => {
+  try {
+    const result = await client
+      .db("grupparbete")
+      .collection("users")
+      .insertOne(userObject);
+
+    return result;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+// const getAllUsers = async () => {
+//   try {
+//     return await client
+//       .db("grupparbete")
+//       .collection("users")
+//       .find({})
+//       .toArray();
+//   } catch (error) {
+//     return error.message;
+//   }
+// };
+
+const getUserByUsername = async (username) => {
+  try {
+    return await client
+      .db("grupparbete")
+      .collection("users")
+      .findOne({ username: username });
+  } catch (error) {
+    return error.message;
+  }
+};
+
 //Function to get all restaurants
 const getRestaurants = async () => {
   try {
@@ -115,6 +151,20 @@ const setRating = async (id, rating) => {
   }
 };
 
+const forceAuthorize = (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    // Inloggade
+    next();
+  } else {
+    // Utloggade
+    res.sendStatus(401);
+  }
+};
+
+exports.addUser = addUser;
+exports.getUserByUsername = getUserByUsername;
 exports.getSpecificRestaurant = getSpecificRestaurant;
 exports.getRestaurants = getRestaurants;
 exports.getSpecificRestaurant = getSpecificRestaurant;
@@ -122,3 +172,4 @@ exports.addRestaurant = addRestaurant;
 exports.editRestaurant = editRestaurant;
 exports.deleteRestaurant = deleteRestaurant;
 exports.setRating = setRating;
+exports.forceAuthorize = forceAuthorize;

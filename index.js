@@ -4,6 +4,8 @@ const restaurantsRoute = require("./routes/restaurants.js");
 const usersRoute = require("./routes/users.js");
 const app = express();
 const db = require("./db/db.js");
+const jwt = require("jsonwebtoken");
+const cookieparser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
 app.use(express.json());
@@ -18,7 +20,21 @@ app.engine(
 app.set("view engine", "hbs");
 
 app.use(express.static("public"));
+app.use(cookieparser());
 app.use(fileUpload());
+
+app.use((req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    res.locals.loggedIn = true;
+    res.locals.username = tokenData.username;
+  } else {
+    res.locals.loggedIn = false;
+  }
+  next();
+});
 
 //Routes
 app.use("/restaurants", restaurantsRoute);
