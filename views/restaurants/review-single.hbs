@@ -10,7 +10,7 @@
   <p><b>Comments: </b>{{comments}}</p>
 </div>
 
-{{#if login}}
+{{#if loggedIn}}
   <label for="delete">Delete Restaurant</label>
   <form action="/restaurants/mypage/delete/{{id}}" method="post">
     <input type="submit" value="Delete" />
