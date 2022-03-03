@@ -7,15 +7,17 @@ const db = require("./db/db.js");
 const jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
+const dotenv = require("dotenv");
+dotenv.config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.engine(
-  "hbs",
-  engine({
-    defaultLayout: "main",
-    extname: ".hbs",
-  })
+	"hbs",
+	engine({
+		defaultLayout: "main",
+		extname: ".hbs",
+	})
 );
 app.set("view engine", "hbs");
 
@@ -24,16 +26,16 @@ app.use(cookieparser());
 app.use(fileUpload());
 
 app.use((req, res, next) => {
-  const { token } = req.cookies;
+	const { token } = req.cookies;
 
-  if (token && jwt.verify(token, process.env.JWTSECRET)) {
-    const tokenData = jwt.decode(token, process.env.JWTSECRET);
-    res.locals.loggedIn = true;
-    res.locals.username = tokenData.username;
-  } else {
-    res.locals.loggedIn = false;
-  }
-  next();
+	if (token && jwt.verify(token, process.env.JWTSECRET)) {
+		const tokenData = jwt.decode(token, process.env.JWTSECRET);
+		res.locals.loggedIn = true;
+		res.locals.username = tokenData.username;
+	} else {
+		res.locals.loggedIn = false;
+	}
+	next();
 });
 
 //Routes
@@ -41,15 +43,15 @@ app.use("/restaurants", restaurantsRoute);
 app.use("/users", usersRoute);
 
 app.get("/", async (req, res) => {
-  const restaurants = await db.getRestaurants();
+	const restaurants = await db.getRestaurants();
 
-  res.render("home", { restaurants });
+	res.render("home", { restaurants });
 });
 
 app.use("/", (req, res) => {
-  res.status(404).render("not-found");
+	res.status(404).render("not-found");
 });
 
 app.listen(3000, () => {
-  console.log("Server is up");
+	console.log("Server is up");
 });
