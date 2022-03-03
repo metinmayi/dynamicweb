@@ -41,7 +41,7 @@ const rating = (ratingObject) => {
 
 const restaurant = (restaurantObject) => {
   const schema = new Joi.object({
-    image: Joi.string().required(),
+    imageUrl: Joi.string().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     reviews: Joi.number().required(),

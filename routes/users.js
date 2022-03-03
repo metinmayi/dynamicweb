@@ -26,8 +26,9 @@ router.post("/register", async (req, res) => {
       username: req.body.username,
       hashedPassword: utils.hashPassword(req.body.password),
     };
-    console.log(newUser);
     await db.addUser(newUser);
+
+    res.redirect("login");
   }
 });
 
@@ -50,7 +51,7 @@ router.post("/login", async (req, res) => {
     const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
     res.cookie("token", accessToken);
-    res.render("home", user);
+    res.redirect("/restaurants");
   } else {
     result.error;
     return res.status(400).send("Invalid payload");

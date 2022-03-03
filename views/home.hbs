@@ -1,0 +1,21 @@
+{{#if loggedIn}}
+  <div class="home-container">
+    {{#each restaurants}}
+      <a href="/restaurants/{{_id}}">
+        <div class="restaurant-container">
+          <h2>{{name}}</h2>
+          <img src="{{imageUrl}}" alt="image" />
+        </div>
+      </a>
+    {{/each}}
+  </div>
+{{else}}
+  <div class="home-container">
+    {{#each restaurants}}
+      <div class="restaurant-container">
+        <h2>{{name}}</h2>
+        <img src="{{imageUrl}}" alt="image" />
+      </div>
+    {{/each}}
+  </div>
+{{/if}}

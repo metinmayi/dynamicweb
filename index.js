@@ -41,7 +41,9 @@ app.use("/restaurants", restaurantsRoute);
 app.use("/users", usersRoute);
 
 app.get("/", async (req, res) => {
-  res.render("home");
+  const restaurants = await db.getRestaurants();
+
+  res.render("home", { restaurants });
 });
 
 app.use("/", (req, res) => {

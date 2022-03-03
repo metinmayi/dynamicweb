@@ -2,17 +2,27 @@ const express = require("express");
 const router = express.Router();
 const validation = require("../validation/validation.js");
 const db = require("../db/db.js");
+const jwt = require("jsonwebtoken");
 const { mongoClient } = require("mongodb");
 const { getUniqueFilename } = require("../utils.js");
+const { JsonWebTokenError } = require("jsonwebtoken");
 
 //localhost:3000/restaurants/
 router.get("/", async (req, res) => {
   const restaurants = await db.getRestaurants();
-  res.send(restaurants);
+
+  res.render("home", { restaurants });
 });
 
-router.get("/mypage", (req, res) => {
-  res.render("restaurants/myPage");
+router.get("/mypage", async (req, res) => {
+  const { token } = req.cookies;
+  const restaurants = await db.getRestaurants();
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    res.render("restaurants/myPage", { restaurants });
+  } else {
+    res.send("Login failed!");
+  }
 });
 
 //Creates a new restaurant
@@ -20,7 +30,7 @@ router.post("/mypage/add", async (req, res) => {
   //Creates and object based on the request body.
   const image = req.files.image;
   const filename = getUniqueFilename(image.name);
-  const uploadPath = __dirname + "/public/uploads/" + filename;
+  const uploadPath = __dirname + "/../public/uploads/" + filename;
 
   await image.mv(uploadPath);
 
@@ -46,10 +56,6 @@ router.post("/mypage/add", async (req, res) => {
 // Single page
 router.get("/:id", async (req, res) => {
   const restaurant = await db.getSpecificRestaurant(req.params.id);
-
-  console.log(req.params.id);
-
-  console.log(restaurant);
 
   res.render("restaurants/review-single", restaurant);
 });

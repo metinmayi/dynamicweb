@@ -10,17 +10,22 @@
 
     <h1>Restaurant Guide</h1>
 
-    <nav>
-      <a href="/">Home</a>
-      <a href="/users/login">Login/register</a>
-      <a href="/restaurants/mypage">My Page</a>
-    </nav>
     {{#if loggedIn}}
+      <nav>
+        <a href="/">Home</a>
+        <a href="/restaurants/mypage">My Page</a>
+      </nav>
+
       <p>Logged in as {{username}}</p>
 
       <form action="/users/logout" method="post">
         <input type="submit" value="Logout" />
       </form>
+    {{else}}
+      <nav>
+        <a href="/">Home</a>
+        <a href="/users/login">Login/register</a>
+      </nav>
     {{/if}}
 
     {{{body}}}
