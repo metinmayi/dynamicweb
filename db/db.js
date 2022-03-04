@@ -24,17 +24,17 @@ const addUser = async (userObject) => {
   }
 };
 
-// const getAllUsers = async () => {
-//   try {
-//     return await client
-//       .db("grupparbete")
-//       .collection("users")
-//       .find({})
-//       .toArray();
-//   } catch (error) {
-//     return error.message;
-//   }
-// };
+const getAllUsers = async () => {
+  try {
+    return await client
+      .db("grupparbete")
+      .collection("users")
+      .find({})
+      .toArray();
+  } catch (error) {
+    return error.message;
+  }
+};
 
 const getUserByUsername = async (username) => {
   try {
@@ -167,9 +167,9 @@ exports.addUser = addUser;
 exports.getUserByUsername = getUserByUsername;
 exports.getSpecificRestaurant = getSpecificRestaurant;
 exports.getRestaurants = getRestaurants;
-exports.getSpecificRestaurant = getSpecificRestaurant;
 exports.addRestaurant = addRestaurant;
 exports.editRestaurant = editRestaurant;
 exports.deleteRestaurant = deleteRestaurant;
 exports.setRating = setRating;
 exports.forceAuthorize = forceAuthorize;
+exports.getAllUsers = getAllUsers;
