@@ -48,6 +48,7 @@ const restaurant = (restaurantObject) => {
 		comments: Joi.array().required(),
 		totalRating: Joi.number().required(),
 		averageRating: Joi.number().required(),
+		creator: Joi.string().required(),
 	});
 
 	return schema.validate(restaurantObject);
