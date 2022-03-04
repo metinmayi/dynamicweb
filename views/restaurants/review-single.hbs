@@ -2,25 +2,26 @@
 <h2>{{name}}</h2>
 
 <div class="restaurant-container">
-  <img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
-  <p><b>Description: </b>{{description}}</p>
-  <p><b>Total rating: </b>{{totalRating}}</p>
-  <p><b>Average rating: </b>{{averageRating}}</p>
-  <p><b>Reviews: </b>{{reviews}}</p>
-  <p><b>Comments: </b>{{comments}}</p>
+	<img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
+	<p><b>Description: </b>{{description}}</p>
+	<p><b>Total rating: </b>{{totalRating}}</p>
+	<p><b>Average rating: </b>{{averageRating}}</p>
+	<p><b>Reviews: </b>{{reviews}}</p>
+	<p><b>Comments: </b>{{comments}}</p>
 </div>
 
-{{#if loggedIn}}
-  <label for="delete">Delete Restaurant</label>
-  <form action="/restaurants/mypage/delete/{{id}}" method="post">
-    <input type="submit" value="Delete" />
-  </form>
+{{#if sameUser}}
+	<label for="delete">Delete Restaurant</label>
+	<form action="/restaurants/mypage/delete/{{id}}" method="post">
+		<input type="submit" value="Delete" />
+	</form>
 
-  <label for="edit">Edit Restaurant</label>
-  <form action="/restaurants/mypage/edit" method="post">
-    <input type="file" name="image" id="image" /><br />
-    <input type="text" name="name" placeholder="Name of Restaurant" /><br />
-    <input type="text" name="description" placeholder="Description" /><br />
-    <input type="submit" value="Confirm" />
-  </form>
+	<label for="edit">Edit Restaurant</label>
+	<form action="/restaurants/mypage/edit" method="post">
+		<input type="file" name="image" id="image" /><br />
+		<input type="text" name="name" placeholder="Name of Restaurant" /><br />
+		<input type="text" name="description" placeholder="Description" /><br />
+		<input type="submit" value="Confirm" />
+	</form>
+	{{! Add else statement that checks for "loggedIn". If loggedIn, show commentsection }}
 {{/if}}

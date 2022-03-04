@@ -40,6 +40,7 @@ router.post("/mypage/add", async (req, res) => {
 		comments: [],
 		totalRating: 0,
 		averageRating: 0,
+		creator: res.locals.username,
 	};
 
 	//Validates the object
@@ -54,6 +55,11 @@ router.post("/mypage/add", async (req, res) => {
 // Single page
 router.get("/:id", async (req, res) => {
 	const restaurant = await db.getSpecificRestaurant(req.params.id);
+	if (restaurant.creator === res.locals.username) {
+		restaurant["sameUser"] = true;
+	}
+
+	console.log(restaurant);
 
 	res.render("restaurants/review-single", restaurant);
 });
