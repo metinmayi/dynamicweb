@@ -24,8 +24,14 @@ const addUser = async (userObject) => {
   }
 };
 
-const getAllUsers = async () => {
+const getUsers = async (specific = false) => {
   try {
+    if (specific) {
+      return await client
+        .db("grupparbete")
+        .collection("users")
+        .findOne({ googleId: specific });
+    }
     return await client
       .db("grupparbete")
       .collection("users")
@@ -172,4 +178,4 @@ exports.editRestaurant = editRestaurant;
 exports.deleteRestaurant = deleteRestaurant;
 exports.setRating = setRating;
 exports.forceAuthorize = forceAuthorize;
-exports.getAllUsers = getAllUsers;
+exports.getUsers = getUsers;

@@ -53,38 +53,36 @@ router.get(
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/failure" }),
-  async (req, res) => {
-    console.log(req.user);
+// router.get(
+//   "/google/callback?:hej",
+//   passport.authenticate("google", { failureRedirect: "/failure" }),
+//   async (req, res) => {
+//     const googleId = req.user.id;
 
-    const googleId = req.user.id;
+//     const user = await db
+//       .getAllUsers()
+//       .findOne({ googleId }, async (err, user) => {
+//         const userData = { displayName: req.user.displayName };
 
-    const users = await db.getAllUsers();
+//         if (user) {
+//           userData.id = user._id;
+//         } else {
+//           const newUser = {
+//             googleId,
+//             displayName: req.user.displayName,
+//           };
 
-    await users.findOne({ googleId }, async (err, user) => {
-      const userData = { displayName: req.user.displayName };
+//           await db.addUser(newUser);
 
-      if (user) {
-        userData.id = user._id;
-      } else {
-        const newUser = {
-          googleId,
-          displayName: req.user.displayName,
-        };
+//           userData.id = newUser._id;
+//         }
+//         const token = jwt.sign(userData, process.env.JWTSECRET);
 
-        await db.addUser(newUser);
-
-        userData.id = newUser._id;
-      }
-      const token = jwt.sign(userData, process.env.JWT_SECRET);
-
-      res.cookie("token", token);
-      res.redirect("/");
-    });
-  }
-);
+//         res.cookie("token", token);
+//         res.redirect("/");
+//       });
+//   }
+// );
 
 router.post("/logout", async (req, res) => {
   res.cookie("token", "", { maxAge: 0 });
