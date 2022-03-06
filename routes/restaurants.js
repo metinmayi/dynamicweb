@@ -59,8 +59,6 @@ router.get("/:id", async (req, res) => {
 		restaurant["sameUser"] = true;
 	}
 
-	console.log(restaurant);
-
 	res.render("restaurants/review-single", restaurant);
 });
 
@@ -75,7 +73,8 @@ router.post("/rate/", async (req, res) => {
 //Deletes a restaurant
 router.post("/delete/:id", async (req, res) => {
 	const result = await db.deleteRestaurant(req.params.id);
-	res.render("/restaurants/review-single", result);
+	console.log(result);
+	res.redirect("/restaurants/mypage");
 });
 //Edits a restaurant
 router.post("/edit", async (req, res) => {
