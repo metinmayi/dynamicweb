@@ -54,8 +54,11 @@ const getUserByUsername = async (username) => {
 };
 
 //Function to get all restaurants
-const getRestaurants = async () => {
+const getRestaurants = async (specific = false) => {
   try {
+    if (specific) {
+      return await client.db("grupparbete").collection("restaurants").find({});
+    }
     return await client
       .db("grupparbete")
       .collection("restaurants")

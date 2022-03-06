@@ -32,8 +32,9 @@ app.use((req, res, next) => {
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
+
     res.locals.loggedIn = true;
-    res.locals.username = tokenData.username;
+    res.locals.username = tokenData.username ?? tokenData.displayName;
   } else {
     res.locals.loggedIn = false;
   }
@@ -48,7 +49,7 @@ app.get(
 
     const user = await db.getUsers(googleId);
     const userData = { displayName: req.user.displayName };
-    console.log(user);
+
     if (user) {
       userData.id = user._id;
     } else {
@@ -62,8 +63,7 @@ app.get(
     }
     const token = jwt.sign(userData, process.env.JWTSECRET);
 
-    res.cookie("token", token);
-    res.redirect("/");
+    return res.cookie("token", token).redirect("/");
   }
 );
 //Routes
