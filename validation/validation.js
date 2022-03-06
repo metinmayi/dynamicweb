@@ -54,12 +54,13 @@ const restaurant = (restaurantObject) => {
 	return schema.validate(restaurantObject);
 };
 
-const edit = (data) => {
+const edit = (id, data) => {
+	data["id"] = id;
 	const schema = new Joi.object({
 		id: Joi.string().required(),
-		name: Joi.string(),
-		description: Joi.string(),
-		image: Joi.string(),
+		name: Joi.string().allow(""),
+		description: Joi.string().allow(""),
+		image: Joi.string().allow(""),
 	});
 
 	return schema.validate(data);

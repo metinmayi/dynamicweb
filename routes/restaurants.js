@@ -73,18 +73,17 @@ router.post("/rate/", async (req, res) => {
 //Deletes a restaurant
 router.post("/delete/:id", async (req, res) => {
 	const result = await db.deleteRestaurant(req.params.id);
-	console.log(result);
 	res.redirect("/restaurants/mypage");
 });
 //Edits a restaurant
-router.post("/edit", async (req, res) => {
-	const validationResult = await validation.edit(req.body);
+router.post("/edit/:id", async (req, res) => {
+	const validationResult = await validation.edit(req.params.id, req.body);
 	if (validationResult.error) {
 		return res.send(validationResult.error.message);
 	}
-	const result = await db.editRestaurant(req.body);
-	res.send(result);
-	// res.render("/restaurants/review-mypage-single", result);
+
+	const result = await db.editRestaurant(req.params.id, req.body);
+	res.redirect("/");
 });
 
 module.exports = router;
