@@ -15,11 +15,11 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(express.urlencoded({ extended: false }));
 app.engine(
-  "hbs",
-  engine({
-    defaultLayout: "main",
-    extname: ".hbs",
-  })
+	"hbs",
+	engine({
+		defaultLayout: "main",
+		extname: ".hbs",
+	})
 );
 app.set("view engine", "hbs");
 
@@ -28,58 +28,61 @@ app.use(cookieparser());
 app.use(fileUpload());
 
 app.use((req, res, next) => {
-  const { token } = req.cookies;
+	console.log("Triggered");
+	const { token } = req.cookies;
 
-  if (token && jwt.verify(token, process.env.JWTSECRET)) {
-    const tokenData = jwt.decode(token, process.env.JWTSECRET);
-    res.locals.loggedIn = true;
-    res.locals.username = tokenData.username;
-  } else {
-    res.locals.loggedIn = false;
-  }
-  next();
+	if (token && jwt.verify(token, process.env.JWTSECRET)) {
+		const tokenData = jwt.decode(token, process.env.JWTSECRET);
+		res.locals.loggedIn = true;
+		res.locals.username = tokenData.username ?? tokenData.displayName;
+		console.log(tokenData);
+	} else {
+		res.locals.loggedIn = false;
+	}
+	next();
 });
 
 app.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/failure" }),
-  async (req, res) => {
-    const googleId = req.user.id;
+	"/google/callback",
+	passport.authenticate("google", { failureRedirect: "/failure" }),
+	async (req, res) => {
+		const googleId = req.user.id;
 
-    const user = await db.getUsers(googleId);
-    const userData = { displayName: req.user.displayName };
-    console.log(user);
-    if (user) {
-      userData.id = user._id;
-    } else {
-      const newUser = {
-        googleId,
-      };
+		const user = await db.getUsers(googleId);
+		const userData = { displayName: req.user.displayName };
+		console.log(user);
+		if (user) {
+			userData.id = user._id;
+		} else {
+			const newUser = {
+				googleId,
+			};
 
-      await db.addUser(newUser);
+			await db.addUser(newUser);
 
-      userData.id = newUser._id;
-    }
-    const token = jwt.sign(userData, process.env.JWTSECRET);
+			userData.id = newUser._id;
+		}
+		const token = jwt.sign(userData, process.env.JWTSECRET);
 
-    res.cookie("token", token);
-    res.redirect("/");
-  }
+		// res.cookie("token", token);
+		// res.redirect("/");
+		return res.cookie("token", token).redirect("/");
+	}
 );
 //Routes
 app.use("/restaurants", restaurantsRoute);
 app.use("/users", usersRoute);
 
 app.get("/", async (req, res) => {
-  const restaurants = await db.getRestaurants();
+	const restaurants = await db.getRestaurants();
 
-  res.render("home", { restaurants });
+	res.render("home", { restaurants });
 });
 
 app.use("/", (req, res) => {
-  res.status(404).render("not-found");
+	res.status(404).render("not-found");
 });
 
 app.listen(3000, () => {
-  console.log("Server is up");
+	console.log("Server is up");
 });

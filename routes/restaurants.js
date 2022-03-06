@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/mypage", async (req, res) => {
+	console.log(res.locals);
 	const { token } = req.cookies;
 	const restaurants = await db.getRestaurants();
 
@@ -57,6 +58,8 @@ router.get("/:id", async (req, res) => {
 	const restaurant = await db.getSpecificRestaurant(req.params.id);
 	if (restaurant.creator === res.locals.username) {
 		restaurant["sameUser"] = true;
+	} else {
+		restaurant["differentUser"] = true;
 	}
 
 	res.render("restaurants/review-single", restaurant);
