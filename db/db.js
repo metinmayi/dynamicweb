@@ -58,7 +58,11 @@ const getUserByUsername = async (username) => {
 const getRestaurants = async (specific = false) => {
 	try {
 		if (specific) {
-			return await client.db("grupparbete").collection("restaurants").find({});
+			return await client
+				.db("grupparbete")
+				.collection("restaurants")
+				.find({ creator: specific })
+				.toArray();
 		}
 		return await client
 			.db("grupparbete")

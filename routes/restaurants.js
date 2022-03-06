@@ -14,7 +14,8 @@ router.get("/", async (req, res) => {
 
 router.get("/mypage", async (req, res) => {
 	const { token } = req.cookies;
-	const restaurants = await db.getRestaurants();
+	const restaurants = await db.getRestaurants(res.locals.username);
+	console.log(restaurants);
 
 	if (token && jwt.verify(token, process.env.JWTSECRET)) {
 		res.render("restaurants/myPage", { restaurants });
@@ -104,7 +105,7 @@ router.post("/rate/", async (req, res) => {
 //Deletes a restaurant
 router.post("/delete/:id", async (req, res) => {
 	const result = await db.deleteRestaurant(req.params.id);
-	res.render("/restaurants/review-single", result);
+	res.render("/restaurants/review-single");
 });
 //Edits a restaurant
 router.post("/edit", async (req, res) => {
