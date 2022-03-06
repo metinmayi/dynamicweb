@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const { MongoClient, ObjectId } = require("mongodb");
-const { review, restaurant } = require("../validation/validation");
+const { review, restaurant, edit } = require("../validation/validation");
 const client = new MongoClient(process.env.MONGODB_TOKEN);
 client.connect(async (err) => {
 	if (err) {
@@ -171,6 +171,27 @@ const forceAuthorize = (req, res, next) => {
 	}
 };
 
+const addComment = async (body) => {
+	try {
+		console.log("In the DB");
+		const mongoID = new ObjectId(body.id);
+		const editRestaurant = await client
+			.db("grupparbete")
+			.collection("restaurants")
+			.updateOne(
+				{ _id: mongoID },
+				{
+					$push: {
+						comments: { username: body.username, comment: body.comment },
+					},
+				}
+			);
+		return editRestaurant;
+	} catch (error) {
+		return error.message;
+	}
+};
+
 exports.addUser = addUser;
 exports.getUserByUsername = getUserByUsername;
 exports.getSpecificRestaurant = getSpecificRestaurant;
@@ -181,3 +202,4 @@ exports.deleteRestaurant = deleteRestaurant;
 exports.setRating = setRating;
 exports.forceAuthorize = forceAuthorize;
 exports.getUsers = getUsers;
+exports.addComment = addComment;

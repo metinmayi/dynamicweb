@@ -5,7 +5,12 @@
 	<img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
 	<p><b>Description: </b>{{description}}</p>
 	<p><b>Rating: </b>{{averageRating}}</p>
-	<p><b>Comments: </b>{{comments}}</p>
+	{{#if comments}}
+		<p><b>Comments:</b></p>
+	{{/if}}
+	{{#each comments}}
+		<p>{{username}} : {{comment}}</p>
+	{{/each}}
 	<p><b>Made by:</b>{{creator}}</p>
 </div>
 
@@ -24,6 +29,18 @@
 	</form>
 {{else}}
 	{{#if differentUser}}
-		<h1>You cant see edit/delete cause this was not made by you</h1>
+		<label for="comment">Comment and rate</label>
+		<form action="/restaurants/comment/{{_id}}" method="post">
+			<input type="text" name="comment" placeholder="Add a comment..." /><br />
+			<select name="rating">
+				<option value="Rating" disabled selected>Rate restaurant</option>
+				<option value="1">&#9733;</option>
+				<option value="2">&#9733; &#9733;</option>
+				<option value="3">&#9733; &#9733; &#9733;</option>
+				<option value="4">&#9733; &#9733; &#9733; &#9733;</option>
+				<option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
+			</select>
+			<input type="submit" value="Confirm" />
+		</form>
 	{{/if}}
 {{/if}}

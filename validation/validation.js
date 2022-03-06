@@ -26,11 +26,6 @@ const register = (body) => {
 	return schema.validate(register);
 };
 
-// const registerValidation = new Joi.object({
-// 	username: Joi.string().min(1).max(12).required(),
-// 	password: Joi.string().required(),
-// });
-
 const rating = (ratingObject) => {
 	const schema = new Joi.object({
 		id: Joi.string().required(),
@@ -66,8 +61,20 @@ const edit = (id, data) => {
 	return schema.validate(data);
 };
 
+const addComment = (data) => {
+	// console.log(data);
+	const schema = new Joi.object({
+		id: Joi.string().required(),
+		comment: Joi.string().allow(""),
+		username: Joi.string().required(),
+	});
+
+	return schema.validate(data);
+};
+
 exports.register = register;
 exports.login = login;
 exports.restaurant = restaurant;
 exports.rating = rating;
 exports.edit = edit;
+exports.addComment = addComment;

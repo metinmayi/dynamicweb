@@ -23,6 +23,21 @@ router.get("/mypage", async (req, res) => {
 	}
 });
 
+router.post("/comment/:id", async (req, res) => {
+	const commentObject = {
+		id: req.params.id,
+		comment: req.body.comment,
+		username: res.locals.username,
+	};
+	const validateResult = await validation.addComment(commentObject);
+	if (validateResult.error)
+		return res.status(400).send(validateResult.error.message);
+
+	const addComment = await db.addComment(commentObject);
+
+	res.redirect("/");
+});
+
 //Creates a new restaurant
 router.post("/mypage/add", async (req, res) => {
 	//Creates and object based on the request body.
