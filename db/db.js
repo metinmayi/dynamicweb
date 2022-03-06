@@ -130,6 +130,7 @@ const deleteRestaurant = async (id) => {
 };
 
 const setRating = async (id, rating) => {
+	console.log(id, rating);
 	try {
 		const mongoID = new ObjectId(id);
 		await client
@@ -142,7 +143,7 @@ const setRating = async (id, rating) => {
 							$add: ["$reviews", 1],
 						},
 						totalRating: {
-							$add: ["$totalRating", rating],
+							$add: ["$totalRating", +rating],
 						},
 					},
 				},
@@ -173,9 +174,8 @@ const forceAuthorize = (req, res, next) => {
 
 const addComment = async (body) => {
 	try {
-		console.log("In the DB");
 		const mongoID = new ObjectId(body.id);
-		const editRestaurant = await client
+		const addedComment = await client
 			.db("grupparbete")
 			.collection("restaurants")
 			.updateOne(
@@ -186,12 +186,36 @@ const addComment = async (body) => {
 					},
 				}
 			);
-		return editRestaurant;
+		return addedComment;
 	} catch (error) {
 		return error.message;
 	}
 };
 
+const addRating = async (body) => {
+	try {
+		const mongoID = new ObjectId(body.id);
+		const addedRating = await client
+			.db("grupparbete")
+			.collection("restaurants")
+			.updateOne({ _id: mongoID }, [
+				{
+					$set: {
+						reviews: {
+							$add: ["$reviews", 1],
+						},
+						totalRating: {
+							$add: ["$totalRating", body.rating],
+						},
+					},
+				},
+			]);
+		console.log(addedRating);
+		return addedRating;
+	} catch (error) {
+		return error.message;
+	}
+};
 exports.addUser = addUser;
 exports.getUserByUsername = getUserByUsername;
 exports.getSpecificRestaurant = getSpecificRestaurant;
@@ -203,3 +227,4 @@ exports.setRating = setRating;
 exports.forceAuthorize = forceAuthorize;
 exports.getUsers = getUsers;
 exports.addComment = addComment;
+exports.addRating = addRating;

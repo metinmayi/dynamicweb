@@ -62,11 +62,19 @@ const edit = (id, data) => {
 };
 
 const addComment = (data) => {
-	// console.log(data);
 	const schema = new Joi.object({
 		id: Joi.string().required(),
 		comment: Joi.string().allow(""),
 		username: Joi.string().required(),
+	});
+
+	return schema.validate(data);
+};
+
+const addRating = (data) => {
+	const schema = new Joi.object({
+		id: Joi.string().required(),
+		rating: Joi.number().less(5).required(),
 	});
 
 	return schema.validate(data);
@@ -78,3 +86,4 @@ exports.restaurant = restaurant;
 exports.rating = rating;
 exports.edit = edit;
 exports.addComment = addComment;
+exports.addRating = addRating;

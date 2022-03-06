@@ -38,6 +38,21 @@ router.post("/comment/:id", async (req, res) => {
 	res.redirect("/");
 });
 
+router.post("/rate/:id", async (req, res) => {
+	const commentObject = {
+		id: req.params.id,
+		rating: req.body.rating,
+	};
+	const validateResult = await validation.addRating(commentObject);
+	if (validateResult.error)
+		return res.status(400).send(validateResult.error.message);
+
+	const addComment = await db.setRating(req.params.id, req.body.rating);
+	console.log(addComment);
+
+	res.redirect("/");
+});
+
 //Creates a new restaurant
 router.post("/mypage/add", async (req, res) => {
 	//Creates and object based on the request body.
