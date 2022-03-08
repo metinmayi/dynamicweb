@@ -2,55 +2,55 @@
 <h2>{{name}}</h2>
 
 <div class="restaurant-container">
-  <img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
-  <p><b>Description: </b>{{description}}</p>
-  <p><b>Rating: </b>{{averageRating}}</p>
-  {{#if comments}}
-    <p><b>Comments:</b></p>
-  {{/if}}
-  {{#each comments}}
-    <p>{{username}}: {{comment}}</p>
-  {{/each}}
-  <p><b>Made by: </b>{{creator}}</p>
+	<img src="{{imageUrl}}" alt="Picture of an awesome restaurant" />
+	<p><b>Description: </b>{{description}}</p>
+	<p><b>Rating: </b>{{averageRating}}</p>
+	{{#if comments}}
+		<p><b>Comments:</b></p>
+	{{/if}}
+	{{#each comments}}
+		<p>{{username}}: {{comment}}</p>
+	{{/each}}
+	<p><b>Made by: </b>{{creator}}</p>
 </div>
 
 {{#if sameUser}}
-  <label for="delete">Delete Restaurant</label>
-  <form action="/restaurants/delete/{{_id}}" method="post">
-    <input type="submit" value="Delete" />
-  </form>
+	<label for="delete">Delete Restaurant</label>
+	<form action="/restaurants/delete/{{_id}}" method="post">
+		<input type="submit" value="Delete" />
+	</form>
 
-  <label for="edit">Edit Restaurant</label>
+	<label for="edit">Edit Restaurant</label>
 
-  <p class="error">{{error}}</p>
+	<p class="error">{{error}}</p>
 
-  <form action="/restaurants/edit/{{_id}}" method="post">
-    <input type="file" name="image" id="image" /><br />
-    <input type="text" name="name" placeholder="Name of Restaurant" /><br />
-    <input type="text" name="description" placeholder="Description" /><br />
-    <input type="submit" value="Confirm" />
-  </form>
+	<form action="/restaurants/edit/{{_id}}" method="post">
+		<input type="file" name="image" id="image" /><br />
+		<input type="text" name="name" placeholder="Name of Restaurant" /><br />
+		<input type="text" name="description" placeholder="Description" /><br />
+		<input type="submit" value="Confirm" />
+	</form>
 {{else}}
-  {{#if differentUser}}
-    <label for="comment">Comment and rate</label>
+	{{#if differentUser}}
+		<label for="comment">Comment and rate</label>
 
-    <p class="error">{{error}}</p>
+		<p class="error">{{error}}</p>
 
-    <form action="/restaurants/comment/{{_id}}" method="post">
-      <input type="text" name="comment" placeholder="Add a comment..." /><br />
-      <input type="submit" value="Confirm" />
-    </form>
+		<form action="/restaurants/comment/{{_id}}" method="post">
+			<input type="text" name="comment" placeholder="Add a comment..." /><br />
+			<input type="submit" value="Confirm" />
+		</form>
 
-    <form action="/restaurants/rate/{{_id}}" method="post">
-      <select name="rating">
-        <option value="Rating" disabled selected>Rate restaurant</option>
-        <option value="1">&#9733;</option>
-        <option value="2">&#9733; &#9733;</option>
-        <option value="3">&#9733; &#9733; &#9733;</option>
-        <option value="4">&#9733; &#9733; &#9733; &#9733;</option>
-        <option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
-      </select>
-      <input type="submit" value="Confirm" />
-    </form>
-  {{/if}}
+		<form action="/restaurants/rate/{{_id}}" method="post">
+			<select name="rating">
+				<option value="Rating" disabled selected>Rate restaurant</option>
+				<option value="1">&#9733;</option>
+				<option value="2">&#9733; &#9733;</option>
+				<option value="3">&#9733; &#9733; &#9733;</option>
+				<option value="4">&#9733; &#9733; &#9733; &#9733;</option>
+				<option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
+			</select>
+			<input type="submit" value="Confirm" />
+		</form>
+	{{/if}}
 {{/if}}
