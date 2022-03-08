@@ -1,34 +1,37 @@
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/style.css" />
-		<title>Restaurant Guide</title>
-	</head>
-	<body>
-
-		<h1>Restaurant Guide</h1>
-
-		{{#if loggedIn}}
-			<nav>
-				<a href="/">Home</a>
-				<a href="/restaurants/mypage">My Page</a>
-			</nav>
-
-			<p>Logged in as {{username}}</p>
-
-			<form action="/users/logout" method="post">
-				<input type="submit" value="Logout" />
-			</form>
-		{{else}}
-			<nav>
-				<a href="/">Home</a>
-				<a href="/users/login">Login/register</a>
-			</nav>
-		{{/if}}
-
-		{{{body}}}
-
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Restaurant Guide</title>
+  </head>
+  <body>
+    {{#if loggedIn}}
+      <header>
+        <img class="logo" src="/images/logo.svg" alt="logo" />
+        <nav>
+          <ul class="nav_links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/restaurants/mypage">My Page</a></li>
+          </ul>
+        </nav>
+        <form class="logout-form" action="/users/logout" method="post">
+          <input type="submit" value="Logout" />
+        </form>
+      </header>
+      {{!-- <p>Logged in as {{username}}</p> --}}
+    {{else}}
+      <header>
+        <img class="logo" src="/images/logo.svg" alt="logo" />
+        <nav>
+          <ul class="nav_links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/users/login">Login/register</a></li>
+          </ul>
+        </nav>
+      </header>
+    {{/if}}
+    {{{body}}}
+  </body>
 </html>
