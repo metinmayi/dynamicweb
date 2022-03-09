@@ -16,8 +16,17 @@ const comparePassword = (password, hash) => {
   return correct;
 };
 
+const showStars = (stars) => {
+  let output = "";
+  for (let i = 0; i < stars; i++) {
+    output += "&#9733;";
+  }
+  return output;
+};
+
 module.exports = {
   getUniqueFilename,
   hashPassword,
   comparePassword,
+  showStars,
 };
