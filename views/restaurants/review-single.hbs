@@ -19,11 +19,10 @@
   <div class="comments-container">
     <div class="comment-wrap">
       <div class="comments-item">
-        {{#if comments}}
-          <p><b>Comments:</b></p>
-        {{/if}}
+        <h2><b>Comments</b></h2>
+        {{#if comments}}{{/if}}
         {{#each comments}}
-          <p>{{username}}: {{comment}}</p>
+          <p><b>{{username}}: </b>{{comment}}</p>
         {{/each}}
       </div>
     </div>
