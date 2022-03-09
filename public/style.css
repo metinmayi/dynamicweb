@@ -31,7 +31,6 @@ header {
 }
 
 .logo {
-  cursor: pointer;
   width: 12%;
   height: 12%;
 }
@@ -174,7 +173,8 @@ header {
   align-items: center;
 }
 
-.home-container {
+.home-container,
+.my-restaurants {
   justify-self: center;
 
   display: flex;
@@ -192,7 +192,8 @@ header {
   padding: 20px;
 }
 
-.home-container a {
+.home-container a,
+.my-restaurants a {
   text-decoration: none;
 }
 
@@ -227,11 +228,25 @@ header {
   height: 100%;
 }
 
+.my-page-image-container {
+  width: 100%;
+  height: 65%;
+}
+
+.my-page-image-container img {
+  height: 100%;
+}
+
 .title-container h2 {
   font-family: "Staatliches", cursive;
   letter-spacing: 1px;
 
   color: black;
+}
+
+.title-container p {
+  text-align: center;
+  color: rgb(161, 126, 81);
 }
 
 .description-container {
