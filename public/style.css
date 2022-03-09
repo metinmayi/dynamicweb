@@ -243,3 +243,24 @@ header {
   color: black;
   font-size: 13px;
 }
+.main-not-found-container {
+  display: flex;
+  justify-content: center;
+}
+.not-found-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+}
+.not-found-h2 {
+  color: red;
+}
+.not-found {
+  font-size: 25px;
+  color: #583d15;
+}
+.return-home-link,
+.return-home-link:visited {
+  color: rgb(161, 126, 81);
+}
