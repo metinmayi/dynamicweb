@@ -440,6 +440,7 @@ header {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 3px;
   width: 100%;
 
   font-size: 20px;
@@ -458,10 +459,12 @@ header {
   font-size: 20px;
   font-weight: bold;
 
+  margin-top: -7px;
   width: 60%;
 }
 
 .form-wrapper {
+  margin-top: -10px;
   position: relative;
   left: 90px;
 }

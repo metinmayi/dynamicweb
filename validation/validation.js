@@ -54,9 +54,9 @@ const edit = (id, data) => {
   data["id"] = id;
   const schema = new Joi.object({
     id: Joi.string().required(),
-    name: Joi.string().allow(""),
-    description: Joi.string().allow(""),
-    image: Joi.string().allow(""),
+    name: Joi.string(),
+    description: Joi.string(),
+    image: Joi.string(),
   });
 
   return schema.validate(data);
