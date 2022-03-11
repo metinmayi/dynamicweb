@@ -71,6 +71,7 @@ app.get(
     return res.cookie("token", token).redirect("/");
   }
 );
+
 //Routes
 app.use("/restaurants", restaurantsRoute);
 app.use("/users", usersRoute);
@@ -86,5 +87,5 @@ app.use("/", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Server is up");
+  console.log("http://localhost:3000");
 });

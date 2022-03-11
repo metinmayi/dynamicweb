@@ -27,12 +27,13 @@ router.post("/register", async (req, res) => {
   res.status(200).redirect("login");
 });
 
+//Login-page
 router.get("/login", (req, res) => {
   res.render("users/login-register");
 });
 
+//Login and register
 router.post("/login", async (req, res) => {
-  // Ändrade till loginValidation.login annars hittar den inte funktionen?
   const result = await loginValidation.login(
     req.body.username,
     req.body.password
@@ -48,11 +49,13 @@ router.post("/login", async (req, res) => {
   return res.status(401).send("Incorrect username/password combination.");
 });
 
+//Google login
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
+//Logout
 router.post("/logout", async (req, res) => {
   res.cookie("token", "", { maxAge: 0 });
   res.redirect("/");

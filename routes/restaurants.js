@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
   res.render("home", { restaurants });
 });
 
+//My page
 router.get("/mypage", async (req, res) => {
   const { token } = req.cookies;
   const restaurants = await db.getRestaurants(res.locals.username);
@@ -23,6 +24,7 @@ router.get("/mypage", async (req, res) => {
   }
 });
 
+//Comments on a restaurant
 router.post("/comment/:id", async (req, res) => {
   const commentObject = {
     id: req.params.id,
@@ -117,6 +119,7 @@ router.post("/delete/:id", async (req, res) => {
   await db.deleteRestaurant(req.params.id);
   res.redirect("/restaurants/mypage");
 });
+
 //Edits a restaurant
 router.post("/edit/:id", async (req, res) => {
   const restaurant = await db.getSpecificRestaurant(req.params.id);
