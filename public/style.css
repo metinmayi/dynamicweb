@@ -262,15 +262,6 @@ header {
   height: 100%;
 }
 
-.my-page-image-container {
-  width: 100%;
-  height: 65%;
-}
-
-.my-page-image-container img {
-  height: 100%;
-}
-
 .title-container {
   display: flex;
   flex-direction: column;
